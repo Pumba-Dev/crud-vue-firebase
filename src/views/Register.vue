@@ -25,6 +25,7 @@
             type="password"
             placeholder="confirm your password"
             v-model="inputUser.password_confirm"
+            @keydown.enter="singUp()"
           />
         </InputBox>
         <div class="link">

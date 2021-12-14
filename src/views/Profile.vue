@@ -1,9 +1,13 @@
 <template>
   <div class="profile">
     <div class="profile-container">
-      <img class="profile-img" :src="user.imgSrc" alt="Profile Image" />
+      <img
+        class="profile-img"
+        src="@/assets/default-avatar.jpg"
+        alt="Profile Image"
+      />
       <div class="profile-name">
-        <h2>{{ user.name }}</h2>
+        <h3 class="user-name">{{ user.name }}</h3>
         <h6 style="margin-bottom: 0px">{{ user.task }}</h6>
         <h6>{{ user.age }} years</h6>
       </div>
@@ -23,7 +27,7 @@
         <h6><strong>Street: </strong> {{ user.adress.street }}</h6>
         <h6><strong>Cep: </strong> {{ user.adress.cep }}</h6>
         <h6>
-          <strong>City: </strong> {{ user.adress.city }} -
+          <strong>City: </strong> {{ user.adress.city }}
           {{ user.adress.state }}
         </h6>
       </div>
@@ -52,7 +56,7 @@ export default {
         },
         task: "",
         whoIAm: "",
-        imgSrc: "",
+        imgSrc: "@/assets/default-avatar.jpg",
       },
     };
   },
@@ -117,6 +121,7 @@ export default {
   gap: 20px;
   align-items: center;
   position: relative;
+  max-width: 300px;
 }
 
 .profile-img {
@@ -128,6 +133,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.user-name {
+  text-align: center;
+  max-height: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .logout-btn {

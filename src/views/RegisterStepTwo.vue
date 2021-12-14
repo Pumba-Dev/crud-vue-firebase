@@ -1,6 +1,6 @@
 <template>
   <div class="register-screen">
-    <MedBox>
+    <MedBox @keydown.enter="completeProfile()">
       <h2 style="text-align: center">Complete Your Profile</h2>
       <form>
         <InputBox :desc="'Name:'">
@@ -117,6 +117,7 @@ export default {
         whoIAm: "",
         imgSrc: "",
       },
+      hasArchive: false,
     };
   },
   methods: {

@@ -78,6 +78,7 @@ export default {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
+            console.log("router Register -> Register2");
             this.$router.push({ name: "register2" });
           })
           .catch((error) => {

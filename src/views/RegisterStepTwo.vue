@@ -11,7 +11,22 @@
             v-model="inputUser.name"
           />
         </InputBox>
-        <div style="display: flex; gap: 10px">
+        <div style="display: flex; gap: 10px; justify-content: space-between">
+          <InputBox :desc="'Image:'">
+            <label
+              class="file-input"
+              :class="{ 'archive-selected': hasArchive }"
+              for="input-arq"
+              >Select</label
+            >
+            <input
+              id="input-arq"
+              type="file"
+              @change="processFile($event)"
+              accept="image/"
+              required
+            />
+          </InputBox>
           <InputBox :desc="'Task:'">
             <b-form-input
               required
@@ -117,17 +132,20 @@ export default {
         },
         task: "",
         whoIAm: "",
-        imgSrc: "",
         uid: "",
       };
+    },
+    processFile() {
+      this.hasArchive = true;
     },
     async completeProfile() {
       let userData = this.inputUser;
       userData.uid = window.uid;
-      console.log(window.uid);
+      // console.log(window.uid);
       const db = getFirestore();
       try {
         await setDoc(doc(db, "users", userData.uid), userData);
+        // console.log("Router Register2 -> Home");
         this.$router.push({ name: "home" });
       } catch (e) {
         console.error("Error adding document: ", e);
@@ -164,5 +182,21 @@ export default {
 .cep-city {
   display: flex;
   gap: 10px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-input {
+  background-color: rgba(255, 255, 0, 0.6);
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 5px;
+  border-radius: 6px;
+}
+
+.file-input.archive-selected {
+  background-color: rgba(0, 255, 0, 0.6);
 }
 </style>

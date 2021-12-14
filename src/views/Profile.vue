@@ -74,7 +74,7 @@ export default {
         },
         task: docSnap.data().task,
         whoIAm: docSnap.data().whoIAm,
-        imgSrc: docSnap.data().imgSrc,
+        imgSrc: "@/assets/default-avatar.jpg",
       };
     } else {
       // doc.data() will be undefined in this case
@@ -86,6 +86,7 @@ export default {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
+          console.log("Router Profile -> Login");
           this.$router.push("/login");
         })
         .catch(() => {

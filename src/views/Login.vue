@@ -86,8 +86,8 @@ export default {
           currentUser.password
         );
         window.uid = resp.user.uid;
+        console.log("Router Login -> Home");
         this.$router.push({ name: "home" });
-        // console.log(resp.user.uid);
       } catch (error) {
         let msg = "";
         switch (error.code) {

@@ -17,7 +17,7 @@
         <h6><strong>Account E-mail: </strong>{{ user.email }}</h6>
       </InfoHeader>
       <InfoAdress>
-        <h3 style="text-align: center">Adress</h3>
+        <h3>Adress</h3>
         <h6><strong>Street: </strong> {{ user.adress.street }}</h6>
         <h6><strong>Cep: </strong> {{ user.adress.cep }}</h6>
         <h6>
@@ -27,7 +27,7 @@
       </InfoAdress>
       <WhoIAm>
         <h3>Who I Am:</h3>
-        <p class="who-i-am">{{ user.whoIAm }}</p>
+        <p>{{ user.whoIAm }}</p>
       </WhoIAm>
     </InfoContainer>
   </div>

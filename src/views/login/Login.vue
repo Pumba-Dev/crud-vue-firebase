@@ -20,24 +20,18 @@
             @keydown.enter="login()"
           />
         </InputContainer>
-        <div class="register-link">
-          <router-link class="register-link-btn" to="/register"
-            >don't have a registration?</router-link
-          >
-        </div>
-        <div class="submit-btn">
-          <div>
-            <input
-              type="checkbox"
-              style="margin-right: 10px"
-              v-model="rememberMail"
-            />
+        <HyperLinkContainer>
+          <router-link to="/register">don't have a registration?</router-link>
+        </HyperLinkContainer>
+        <SubmitContainer>
+          <RememberMail>
+            <input type="checkbox" v-model="rememberMail" />
             <span>Remember E-mail?</span>
-          </div>
+          </RememberMail>
           <b-button @click.prevent="login()" variant="primary">
             Sign In
           </b-button>
-        </div>
+        </SubmitContainer>
       </form>
     </DefaultBox>
   </div>
@@ -47,12 +41,18 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import DefaultBox from "@/components/DefaultBox.vue";
 import InputContainer from "@/components/InputContainer.vue";
+import HyperLinkContainer from "@/components/HyperLinkContainer.vue";
+import SubmitContainer from "./SubmitContainer.vue";
+import RememberMail from "./RememberMail.vue";
 
 export default {
   name: "Home",
   components: {
+    SubmitContainer,
+    RememberMail,
     DefaultBox,
     InputContainer,
+    HyperLinkContainer,
   },
   data() {
     return {
@@ -75,8 +75,7 @@ export default {
     pushCacheEmail() {
       localStorage.setItem("savedEmail", this.inputUser.email);
     },
-    async login() {
-      if (this.rememberMail) this.pushCacheEmail();
+    async authWithFireBase() {
       const currentUser = this.inputUser;
       try {
         const auth = getAuth();
@@ -105,6 +104,10 @@ export default {
           type: "danger",
         });
       }
+    },
+    login() {
+      if (this.rememberMail) this.pushCacheEmail();
+      this.authWithFireBase();
       this.resetAttr();
     },
   },
@@ -116,22 +119,5 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.register-link {
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.register-link-btn {
-  text-decoration: none;
-}
-
-.submit-btn {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 20px;
 }
 </style>

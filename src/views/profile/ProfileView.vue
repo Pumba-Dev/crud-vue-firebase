@@ -1,5 +1,5 @@
 <template>
-  <div class="profile">
+  <div class="profile-view">
     <UserContainer>
       <UserImg />
       <ProfileName>
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style scoped>
-.profile {
+.profile-view {
   display: flex;
   background-color: #fff4;
   border: 1px solid #fff8;

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/login/Login.vue'
 import Register from '../views/register/Register.vue'
 import RegisterStepTwo from '../views/register/RegisterStepTwo.vue'
-import Profile from '../views/profile/Profile.vue'
+import ProfileView from '../views/profile/ProfileView.vue'
 
 Vue.use(VueRouter)
 
@@ -37,7 +37,7 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Profile,
+    component: ProfileView,
     meta: {
       requiresAuth: true
     }

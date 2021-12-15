@@ -1,5 +1,5 @@
 <template>
-  <div class="input-box">
+  <div class="input-container">
     <span class="desc">{{ desc }}</span>
     <slot></slot>
   </div>

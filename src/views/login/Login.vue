@@ -1,17 +1,17 @@
 <template>
   <div class="login-screen">
-    <MedBox>
+    <DefaultBox>
       <h1 style="text-align: center">Login</h1>
       <form>
-        <InputBox :desc="'E-mail:'">
+        <InputContainer :desc="'E-mail:'">
           <b-form-input
             required
             type="text"
             placeholder="type your e-mail"
             v-model="inputUser.email"
           />
-        </InputBox>
-        <InputBox :desc="'Password:'">
+        </InputContainer>
+        <InputContainer :desc="'Password:'">
           <b-form-input
             required
             type="password"
@@ -19,7 +19,7 @@
             v-model="inputUser.password"
             @keydown.enter="login()"
           />
-        </InputBox>
+        </InputContainer>
         <div class="register-link">
           <router-link class="register-link-btn" to="/register"
             >don't have a registration?</router-link
@@ -34,25 +34,25 @@
             />
             <span>Remember E-mail?</span>
           </div>
-          <b-button @click.prevent="login()" variant="primary"
-            >Sign In</b-button
-          >
+          <b-button @click.prevent="login()" variant="primary">
+            Sign In
+          </b-button>
         </div>
       </form>
-    </MedBox>
+    </DefaultBox>
   </div>
 </template>
 
 <script>
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import MedBox from "@/components/MedBox.vue";
-import InputBox from "@/components/InputBox.vue";
+import DefaultBox from "@/components/DefaultBox.vue";
+import InputContainer from "@/components/InputContainer.vue";
 
 export default {
   name: "Home",
   components: {
-    MedBox,
-    InputBox,
+    DefaultBox,
+    InputContainer,
   },
   data() {
     return {

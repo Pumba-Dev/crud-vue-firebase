@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import RegisterStepTwo from '../views/RegisterStepTwo.vue'
-import Profile from '../views/Profile.vue'
+import Login from '../views/login/Login.vue'
+import Register from '../views/register/Register.vue'
+import RegisterStepTwo from '../views/register/RegisterStepTwo.vue'
+import Profile from '../views/profile/Profile.vue'
 
 Vue.use(VueRouter)
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="med-box">
+  <div class="default-box">
     <slot></slot>
   </div>
 </template>
@@ -9,7 +9,7 @@ export default {};
 </script>
 
 <style>
-.med-box {
+.default-box {
   background-color: #fff4;
   border: 1px solid #fff8;
   border-radius: 2em;

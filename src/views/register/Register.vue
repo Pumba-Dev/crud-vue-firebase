@@ -1,25 +1,25 @@
 <template>
   <div class="register-screen">
-    <MedBox>
+    <DefaultBox>
       <h1 style="text-align: center">Register</h1>
       <form>
-        <InputBox :desc="'E-mail:'">
+        <InputContainer :desc="'E-mail:'">
           <b-form-input
             required
             type="text"
             placeholder="type your e-mail"
             v-model="inputUser.email"
           />
-        </InputBox>
-        <InputBox :desc="'Password:'">
+        </InputContainer>
+        <InputContainer :desc="'Password:'">
           <b-form-input
             required
             type="password"
             placeholder="type your password"
             v-model="inputUser.password"
           />
-        </InputBox>
-        <InputBox :desc="'Confirm Password:'">
+        </InputContainer>
+        <InputContainer :desc="'Confirm Password:'">
           <b-form-input
             required
             type="password"
@@ -27,7 +27,7 @@
             v-model="inputUser.password_confirm"
             @keydown.enter="singUp()"
           />
-        </InputBox>
+        </InputContainer>
         <div class="link">
           <router-link class="link-btn" to="/Login"
             >Already have a registration?
@@ -39,19 +39,19 @@
           >
         </div>
       </form>
-    </MedBox>
+    </DefaultBox>
   </div>
 </template>
 
 <script>
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import MedBox from "@/components/MedBox.vue";
-import InputBox from "@/components/InputBox.vue";
+import DefaultBox from "@/components/DefaultBox.vue";
+import InputContainer from "@/components/InputContainer.vue";
 export default {
   name: "Register",
   components: {
-    MedBox,
-    InputBox,
+    DefaultBox,
+    InputContainer,
   },
   data() {
     return {

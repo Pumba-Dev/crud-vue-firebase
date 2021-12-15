@@ -1,18 +1,18 @@
 <template>
   <div class="register-screen">
-    <MedBox @keydown.enter="completeProfile()">
+    <DefaultBox @keydown.enter="completeProfile()">
       <h2 style="text-align: center">Complete Your Profile</h2>
       <form>
-        <InputBox :desc="'Name:'">
+        <InputContainer :desc="'Name:'">
           <b-form-input
             required
             type="text"
             placeholder="type your name"
             v-model="inputUser.name"
           />
-        </InputBox>
+        </InputContainer>
         <div style="display: flex; gap: 10px; justify-content: space-between">
-          <InputBox :desc="'Image:'">
+          <InputContainer :desc="'Image:'">
             <label
               class="file-input"
               :class="{ 'archive-selected': hasArchive }"
@@ -26,16 +26,16 @@
               accept="image/"
               required
             />
-          </InputBox>
-          <InputBox :desc="'Task:'">
+          </InputContainer>
+          <InputContainer :desc="'Task:'">
             <b-form-input
               required
               type="text"
               placeholder="type your ocupation"
               v-model="inputUser.task"
             />
-          </InputBox>
-          <InputBox :desc="'Age:'">
+          </InputContainer>
+          <InputContainer :desc="'Age:'">
             <b-form-input
               style="max-width: 70px"
               required
@@ -43,44 +43,44 @@
               placeholder="type your age"
               v-model="inputUser.age"
             />
-          </InputBox>
+          </InputContainer>
         </div>
 
-        <InputBox :desc="'Street:'">
+        <InputContainer :desc="'Street:'">
           <b-form-input
             required
             type="text"
             placeholder="Type yout street"
             v-model="inputUser.adress.street"
           />
-        </InputBox>
+        </InputContainer>
         <div class="cep-city">
-          <InputBox :desc="'CEP:'">
+          <InputContainer :desc="'CEP:'">
             <b-form-input
               required
               type="text"
               placeholder="000000-00"
               v-model="inputUser.adress.cep"
             />
-          </InputBox>
-          <InputBox :desc="'City:'">
+          </InputContainer>
+          <InputContainer :desc="'City:'">
             <b-form-input
               required
               type="text"
               placeholder="City - State"
               v-model="inputUser.adress.city"
             />
-          </InputBox>
+          </InputContainer>
         </div>
         <div>
-          <InputBox :desc="'Who You Are:'">
+          <InputContainer :desc="'Who You Are:'">
             <b-form-input
               required
               type="text"
               placeholder="Type about you..."
               v-model="inputUser.whoIAm"
             />
-          </InputBox>
+          </InputContainer>
         </div>
         <div class="submit-btn">
           <b-button @click.prevent="completeProfile()" variant="primary"
@@ -88,19 +88,19 @@
           >
         </div>
       </form>
-    </MedBox>
+    </DefaultBox>
   </div>
 </template>
 
 <script>
 import { getFirestore, setDoc, doc } from "firebase/firestore";
-import MedBox from "@/components/MedBox.vue";
-import InputBox from "@/components/InputBox.vue";
+import DefaultBox from "@/components/DefaultBox.vue";
+import InputContainer from "@/components/InputContainer.vue";
 export default {
   name: "Register",
   components: {
-    MedBox,
-    InputBox,
+    DefaultBox,
+    InputContainer,
   },
   data() {
     return {

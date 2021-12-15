@@ -1,7 +1,7 @@
 <template>
-  <div class="register-step-two-view">
+  <div>
     <DefaultBox>
-      <h2>Complete Your Profile</h2>
+      <h1>Update</h1>
       <form>
         <InputContainer :desc="'Name:'">
           <b-form-input
@@ -85,7 +85,7 @@
           </InputContainer>
         </div>
         <div class="submit-btn">
-          <b-button @click.prevent="completeProfile()" variant="primary"
+          <b-button @click.prevent="submitUpdate()" variant="primary"
             >Done</b-button
           >
         </div>
@@ -95,20 +95,15 @@
 </template>
 
 <script>
-import { consultCEP } from "./searchCEP.js";
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import DefaultBox from "@/components/DefaultBox.vue";
 import InputContainer from "@/components/InputContainer.vue";
 import ColumnContainer from "@/components/ColumnContainer.vue";
-import InputImageBtn from "./InputImageBtn.vue";
+import InputImageBtn from "@/views/register/InputImageBtn.vue";
+
 export default {
-  name: "Register",
-  components: {
-    DefaultBox,
-    InputContainer,
-    ColumnContainer,
-    InputImageBtn,
-  },
+  components: { DefaultBox, InputContainer, ColumnContainer, InputImageBtn },
   data() {
     return {
       inputUser: {
@@ -125,100 +120,70 @@ export default {
       hasArchive: false,
     };
   },
+  mounted() {
+    this.setCurrentUser();
+    this.setUserProfile();
+  },
   methods: {
-    reset() {
-      this.inputUser = {
-        name: "",
-        age: 0,
-        adress: {
-          street: "",
-          cep: "",
-          city: "",
-          state: "",
-        },
-        task: "",
-        whoIAm: "",
-        uid: "",
-      };
-    },
     processFile() {
       this.hasArchive = true;
-    },
-    throwError(error) {
-      let msg = "";
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          msg = "This e-mail already in use.";
-          this.email = ""; // Limpa o input de E-mail
-          break;
-        default:
-          msg = error.message;
-      }
-      this.$root.$emit("NewNotification", {
-        msg,
-        type: "danger",
-      });
-    },
-    async processCEP() {
-      try {
-        const dataCEP = await consultCEP(this.inputUser.adress.cep);
-        if (dataCEP.data.uf != undefined) {
-          this.inputUser.adress.street =
-            dataCEP.data.logradouro + " " + dataCEP.data.complemento;
-          this.inputUser.adress.city =
-            dataCEP.data.localidade + " - " + dataCEP.data.uf;
-        }
-      } catch (error) {
-        this.throwError(error);
-      }
-    },
-    async completeProfile() {
-      let userData = this.inputUser;
-      userData.uid = window.uid;
-      // console.log(window.uid);
-      const db = getFirestore();
-      try {
-        await setDoc(doc(db, "users", userData.uid), userData);
-        // console.log("Router Register2 -> Home");
-        this.$router.push({ name: "home" });
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
     },
     fixAge() {
       if (this.inputUser.age < 18) this.inputUser.age = 18;
       if (this.inputUser.age > 110) this.inputUser.age = 110;
+    },
+    sendNotify(msg, type) {
+      this.$root.$emit("NewNotification", {
+        msg: msg,
+        type: type,
+      });
+    },
+    setCurrentUser() {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          Window.uid = user.uid;
+        } else {
+          this.sendNotify("Canot Read User.", "Danger");
+        }
+      });
+    },
+    async setUserProfile() {
+      const db = getFirestore();
+      const userID = Window.uid;
+      const collection = "users";
+      const docRef = doc(db, collection, userID);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        this.inputUser = { ...docSnap.data() };
+      } else {
+        this.sendNotify("Document not exist", "danger");
+      }
+    },
+    async submitUpdate() {
+      const db = getFirestore();
+      const userID = Window.uid;
+      const collection = "users";
+      const newData = this.inputUser;
+      const UserRef = doc(db, collection, userID);
+      console.log(UserRef);
+      await updateDoc(UserRef, {
+        name: newData.name,
+        age: newData.age,
+        adress: {
+          street: newData.adress.street,
+          cep: newData.adress.cep,
+          city: newData.adress.city,
+        },
+        task: newData.task,
+        whoIAm: newData.whoIAm,
+      }).then(() => {
+        this.$router.push({ name: "home" });
+      });
     },
   },
 };
 </script>
 
 <style>
-.register-step-two-view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.link {
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.link-btn {
-  text-decoration: none;
-}
-
-.submit-btn {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 20px;
-}
-
-.cep-city {
-  display: flex;
-  gap: 10px;
-}
 </style>

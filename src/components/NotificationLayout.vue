@@ -45,6 +45,10 @@ export default {
 }
 
 .alert-danger {
+  background-color: rgba(255, 100, 0, 0.7);
+}
+
+.alert-normal {
   background-color: rgba(0, 225, 255, 0.7);
 }
 

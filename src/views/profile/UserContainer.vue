@@ -19,6 +19,8 @@ export default {};
   gap: 20px;
   align-items: center;
   position: relative;
-  max-width: 300px;
+  min-width: 300px;
+  max-width: 350px;
+  min-height: 400px;
 }
 </style>

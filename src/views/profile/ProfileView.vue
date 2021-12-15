@@ -8,10 +8,9 @@
         <h6>{{ user.age }} years</h6>
       </ProfileName>
       <ProfileMenu>
-        <b-button variant="danger" @click="deleteProfile()">
-          Delete Profile
-        </b-button>
-        <b-button variant="primary" @click="logout()"> Logout </b-button>
+        <b-button variant="danger" @click="deleteProfile()"> Delete </b-button>
+        <b-button variant="warning" @click="updateProfile()"> Update </b-button>
+        <b-button variant="primary" @click="logoutProfile()"> Logout </b-button>
       </ProfileMenu>
     </UserContainer>
     <InfoContainer>
@@ -68,7 +67,6 @@ export default {
         },
         task: "",
         whoIAm: "",
-        imgSrc: "",
       },
     };
   },
@@ -76,10 +74,10 @@ export default {
     this.setCurrentUser();
   },
   methods: {
-    sendNotify(msg) {
+    sendNotify(msg, type) {
       this.$root.$emit("NewNotification", {
         msg: msg,
-        type: "danger",
+        type: type,
       });
     },
     throwError(error) {
@@ -132,18 +130,21 @@ export default {
 
       deleteUser(user)
         .then(() => {
-          this.sendNotify("User Deleted");
+          this.sendNotify("User Deleted", "normal");
           this.$router.push({ name: "login" });
         })
         .catch((error) => {
           this.throwError(error.code);
         });
     },
-    logout() {
+    updateProfile() {
+      this.$router.push({ name: "update" });
+    },
+    logoutProfile() {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          this.sendNotify("Logout");
+          this.sendNotify("Logout", "normal");
           this.$router.push("/login");
         })
         .catch(() => {

@@ -4,6 +4,7 @@ import LoginView from '../views/login/LoginView.vue'
 import RegisterStepOneView from '../views/register/RegisterStepOneView.vue'
 import RegisterStepTwoView from '../views/register/RegisterStepTwoView.vue'
 import ProfileView from '../views/profile/ProfileView.vue'
+import UpdateView from '../views/update/UpdateView.vue'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,14 @@ const routes = [
     path: '/home',
     name: 'home',
     component: ProfileView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/update',
+    name: 'update',
+    component: UpdateView,
     meta: {
       requiresAuth: true
     }

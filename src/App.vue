@@ -19,6 +19,7 @@ export default {
   },
   created() {
     this.setCurrentUser();
+    console.log(window.uid);
   },
   methods: {
     setCurrentUser() {

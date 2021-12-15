@@ -10,6 +10,8 @@ export default {};
 
 <style>
 .profile-menu {
+  position: absolute;
+  bottom: 20px;
   display: flex;
   gap: 10px;
 }

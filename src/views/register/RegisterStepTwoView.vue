@@ -1,7 +1,7 @@
 <template>
   <div class="register-step-two-view">
-    <DefaultBox @keydown.enter="completeProfile()">
-      <h2 style="text-align: center">Complete Your Profile</h2>
+    <DefaultBox>
+      <h2>Complete Your Profile</h2>
       <form>
         <InputContainer :desc="'Name:'">
           <b-form-input
@@ -11,21 +11,9 @@
             v-model="inputUser.name"
           />
         </InputContainer>
-        <div style="display: flex; gap: 10px; justify-content: space-between">
+        <ColumnContainer>
           <InputContainer :desc="'Image:'">
-            <label
-              class="file-input"
-              :class="{ 'archive-selected': hasArchive }"
-              for="input-arq"
-              >Select</label
-            >
-            <input
-              id="input-arq"
-              type="file"
-              @change="processFile($event)"
-              accept="image/"
-              required
-            />
+            <InputImageBtn :hasArchive="hasArchive" @newFile="processFile()" />
           </InputContainer>
           <InputContainer :desc="'Task:'">
             <b-form-input
@@ -41,11 +29,10 @@
               required
               type="number"
               placeholder="type your age"
-              v-model="inputUser.age"
+              v-model.number="inputUser.age"
             />
           </InputContainer>
-        </div>
-
+        </ColumnContainer>
         <InputContainer :desc="'Street:'">
           <b-form-input
             required
@@ -59,8 +46,10 @@
             <b-form-input
               required
               type="text"
-              placeholder="000000-00"
+              placeholder="00000-000"
+              v-mask="'#####-###'"
               v-model="inputUser.adress.cep"
+              @blur="processCEP()"
             />
           </InputContainer>
           <InputContainer :desc="'City:'">
@@ -93,14 +82,19 @@
 </template>
 
 <script>
+import { consultCEP } from "./searchCEP.js";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import DefaultBox from "@/components/DefaultBox.vue";
 import InputContainer from "@/components/InputContainer.vue";
+import ColumnContainer from "./ColumnContainer.vue";
+import InputImageBtn from "./InputImageBtn.vue";
 export default {
   name: "Register",
   components: {
     DefaultBox,
     InputContainer,
+    ColumnContainer,
+    InputImageBtn,
   },
   data() {
     return {
@@ -138,6 +132,33 @@ export default {
     },
     processFile() {
       this.hasArchive = true;
+    },
+    throwError(error) {
+      let msg = "";
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          msg = "This e-mail already in use.";
+          this.email = ""; // Limpa o input de E-mail
+          break;
+        default:
+          msg = error.message;
+      }
+      this.$root.$emit("NewNotification", {
+        msg,
+        type: "danger",
+      });
+    },
+    async processCEP() {
+      try {
+        console.log("Buscando Cep.");
+        const dataCEP = await consultCEP(this.inputUser.adress.cep);
+        this.inputUser.adress.street =
+          dataCEP.data.logradouro + " " + dataCEP.data.complemento;
+        this.inputUser.adress.city =
+          dataCEP.data.localidade + " - " + dataCEP.data.uf;
+      } catch (error) {
+        this.throwError(error);
+      }
     },
     async completeProfile() {
       let userData = this.inputUser;
@@ -183,21 +204,5 @@ export default {
 .cep-city {
   display: flex;
   gap: 10px;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-.file-input {
-  background-color: rgba(255, 255, 0, 0.6);
-  text-align: center;
-  font-size: 1.1rem;
-  padding: 5px;
-  border-radius: 6px;
-}
-
-.file-input.archive-selected {
-  background-color: rgba(0, 255, 0, 0.6);
 }
 </style>

@@ -26,7 +26,8 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           window.uid = user.uid;
-          this.$router.push({ name: "home" });
+          if (this.$router.currentRoute.name != "register")
+            this.$router.push({ name: "home" });
         } else {
           window.uid = null;
         }

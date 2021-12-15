@@ -1,7 +1,7 @@
 <template>
   <div class="register-step-one-view">
     <DefaultBox>
-      <h1 style="text-align: center">Register</h1>
+      <h1>Register</h1>
       <form>
         <InputContainer :desc="'E-mail:'">
           <b-form-input
@@ -25,19 +25,16 @@
             type="password"
             placeholder="confirm your password"
             v-model="inputUser.password_confirm"
-            @keydown.enter="singUp()"
           />
         </InputContainer>
-        <div class="link">
-          <router-link class="link-btn" to="/Login"
-            >Already have a registration?
-          </router-link>
-        </div>
-        <div class="submit-btn">
-          <b-button @click.prevent="signUp()" variant="primary"
-            >Sign Up</b-button
-          >
-        </div>
+        <HyperLinkContainer>
+          <router-link to="/Login">Already have a registration?</router-link>
+        </HyperLinkContainer>
+        <SubmitContainerLeft>
+          <b-button @click.prevent="signUp()" variant="primary">
+            Sign Up
+          </b-button>
+        </SubmitContainerLeft>
       </form>
     </DefaultBox>
   </div>
@@ -47,11 +44,15 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import DefaultBox from "@/components/DefaultBox.vue";
 import InputContainer from "@/components/InputContainer.vue";
+import HyperLinkContainer from "@/components/HyperLinkContainer.vue";
+import SubmitContainerLeft from "./SubmitContainerLeft.vue";
+
 export default {
-  name: "Register",
   components: {
     DefaultBox,
     InputContainer,
+    HyperLinkContainer,
+    SubmitContainerLeft,
   },
   data() {
     return {
@@ -72,6 +73,33 @@ export default {
     checkPassword() {
       return this.inputUser.password == this.inputUser.password_confirm;
     },
+    throwError(error) {
+      let msg = "";
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          msg = "This e-mail already in use.";
+          this.email = ""; // Limpa o input de E-mail
+          break;
+        case "auth/wrong-password":
+          msg = "Invalid Password.";
+          break;
+        case "auth/invalid-email":
+          msg = "Invalid E-mail.";
+          break;
+        case "auth/internal-error":
+          msg = "Type a password.";
+          break;
+        case "auth/weak-password":
+          msg = "Password should be at least 6 characters.";
+          break;
+        default:
+          msg = error.message;
+      }
+      this.$root.$emit("NewNotification", {
+        msg,
+        type: "danger",
+      });
+    },
     signUp() {
       if (this.checkPassword()) {
         const email = this.inputUser.email;
@@ -79,26 +107,10 @@ export default {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
-            console.log("router Register -> Register2");
             this.$router.push({ name: "register2" });
           })
           .catch((error) => {
-            let msg = "";
-            switch (error.code) {
-              case "auth/email-already-in-use":
-                msg = "O endereço de e-mail já está em uso por outra conta.";
-                this.email = ""; // Limpa o input de E-mail
-                break;
-              case "auth/wrong-password":
-                msg = "Senha inválida";
-                break;
-              default:
-                msg = "Não foi possível criar a conta, tente novamente";
-            }
-            this.$root.$emit("NewNotification", {
-              msg,
-              type: "danger",
-            });
+            this.throwError(error);
           });
       } else {
         this.$root.$emit("NewNotification", {
@@ -117,22 +129,5 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.link {
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.link-btn {
-  text-decoration: none;
-}
-
-.submit-btn {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 20px;
 }
 </style>

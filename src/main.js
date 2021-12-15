@@ -10,6 +10,10 @@ import { getFirestore } from "firebase/firestore";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+// Import V-Mask
+import { VueMaskFilter } from 'v-mask'
+import VueMask from 'v-mask'
+
 
 let firebaseConfig = {
   apiKey: "AIzaSyDjSvk2lj12LWpzFhn3rNMTfS2di_5Qi9k",
@@ -24,6 +28,9 @@ let firebaseConfig = {
 const firebase = initializeApp(firebaseConfig);
 const db = getFirestore();
 
+Vue.filter('VMask', VueMaskFilter)
+
+Vue.use(VueMask);
 Vue.use(db)
 Vue.use(firebase)
 Vue.use(BootstrapVue)

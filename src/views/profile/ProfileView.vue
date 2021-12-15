@@ -7,9 +7,12 @@
         <h6>{{ user.task }}</h6>
         <h6>{{ user.age }} years</h6>
       </ProfileName>
-      <b-button class="logout-btn" variant="primary" @click="logout()">
-        Logout
-      </b-button>
+      <ProfileMenu>
+        <b-button variant="danger" @click="deleteProfile()">
+          Delete Profile
+        </b-button>
+        <b-button variant="primary" @click="logout()"> Logout </b-button>
+      </ProfileMenu>
     </UserContainer>
     <InfoContainer>
       <InfoHeader>
@@ -31,7 +34,7 @@
 </template>
 
 <script>
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, deleteUser } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import UserContainer from "./UserContainer.vue";
 import InfoContainer from "./InfoContainer.vue";
@@ -40,6 +43,7 @@ import ProfileName from "./ProfileName.vue";
 import InfoHeader from "./InfoHeader.vue";
 import InfoAdress from "./InfoAdress.vue";
 import WhoIAm from "./WhoIAm.vue";
+import ProfileMenu from "./ProfileMenu.vue";
 export default {
   components: {
     UserContainer,
@@ -49,6 +53,7 @@ export default {
     InfoHeader,
     InfoAdress,
     WhoIAm,
+    ProfileMenu,
   },
   data() {
     return {
@@ -71,6 +76,39 @@ export default {
     this.setCurrentUser();
   },
   methods: {
+    sendNotify(msg) {
+      this.$root.$emit("NewNotification", {
+        msg: msg,
+        type: "danger",
+      });
+    },
+    throwError(error) {
+      let msg = "";
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          msg = "This e-mail already in use.";
+          this.email = ""; // Limpa o input de E-mail
+          break;
+        case "auth/wrong-password":
+          msg = "Invalid Password.";
+          break;
+        case "auth/invalid-email":
+          msg = "Invalid E-mail.";
+          break;
+        case "auth/internal-error":
+          msg = "Type a password.";
+          break;
+        case "auth/weak-password":
+          msg = "Password should be at least 6 characters.";
+          break;
+        default:
+          msg = error.message;
+      }
+      this.$root.$emit("NewNotification", {
+        msg,
+        type: "danger",
+      });
+    },
     async setCurrentUser() {
       const db = getFirestore();
       const currentUser = getAuth().currentUser;
@@ -81,16 +119,31 @@ export default {
         this.user = { ...docSnap.data() };
         this.user.email = currentUser.email;
       } else {
+        console.log("Tentando fazer login");
         this.$root.$emit("NewNotification", {
           msg: "Could not read user!",
           type: "danger",
         });
       }
     },
+    deleteProfile() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      deleteUser(user)
+        .then(() => {
+          this.sendNotify("User Deleted");
+          this.$router.push({ name: "login" });
+        })
+        .catch((error) => {
+          this.throwError(error.code);
+        });
+    },
     logout() {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
+          this.sendNotify("Logout");
           this.$router.push("/login");
         })
         .catch(() => {
@@ -110,10 +163,5 @@ export default {
   background-color: #fff4;
   border: 1px solid #fff8;
   border-radius: 2em;
-}
-
-.logout-btn {
-  position: absolute;
-  bottom: 25px;
 }
 </style>

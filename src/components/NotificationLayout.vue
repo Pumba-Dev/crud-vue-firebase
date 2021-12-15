@@ -24,7 +24,6 @@ export default {
         this.close();
       }, payload.timeout || 4000);
     });
-    // console.log(this.msg);
   },
   methods: {
     close() {
@@ -42,10 +41,11 @@ export default {
   position: absolute;
   top: 20px;
   right: 20px;
+  border: 1px solid #000;
 }
 
 .alert-danger {
-  background-color: rgba(255, 20, 0, 0.7);
+  background-color: rgba(0, 225, 255, 0.7);
 }
 
 .msg-text {

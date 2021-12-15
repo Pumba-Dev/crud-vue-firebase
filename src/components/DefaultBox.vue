@@ -17,4 +17,12 @@ export default {};
   width: 25vw;
   min-width: 400px;
 }
+
+.default-box > h1 {
+  text-align: center;
+}
+
+.default-box > h2 {
+  text-align: center;
+}
 </style>

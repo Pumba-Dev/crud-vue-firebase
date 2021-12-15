@@ -1,7 +1,7 @@
 <template>
   <div class="login-view">
     <DefaultBox>
-      <h1 style="text-align: center">Login</h1>
+      <h1>Login</h1>
       <form>
         <InputContainer :desc="'E-mail:'">
           <b-form-input
@@ -46,7 +46,6 @@ import SubmitContainer from "./SubmitContainer.vue";
 import RememberMail from "./RememberMail.vue";
 
 export default {
-  name: "Home",
   components: {
     SubmitContainer,
     RememberMail,
@@ -75,6 +74,29 @@ export default {
     pushCacheEmail() {
       localStorage.setItem("savedEmail", this.inputUser.email);
     },
+    throwError(error) {
+      let msg = "";
+      switch (error.code) {
+        case "auth/user-not-found":
+          msg = "User not found!";
+          break;
+        case "auth/wrong-password":
+          msg = "Invalid Password!";
+          break;
+        case "auth/invalid-email":
+          msg = "Invalid Email!";
+          break;
+        case "auth/internal-error":
+          msg = "Type a password.";
+          break;
+        default:
+          msg = "Internal Error";
+      }
+      this.$root.$emit("NewNotification", {
+        msg,
+        type: "danger",
+      });
+    },
     async authWithFireBase() {
       const currentUser = this.inputUser;
       try {
@@ -85,24 +107,9 @@ export default {
           currentUser.password
         );
         window.uid = resp.user.uid;
-        console.log("Router Login -> Home");
         this.$router.push({ name: "home" });
       } catch (error) {
-        let msg = "";
-        switch (error.code) {
-          case "auth/user-not-found":
-            msg = "User not found!";
-            break;
-          case "auth/wrong-password":
-            msg = "Invalid Password!";
-            break;
-          default:
-            msg = "Could not login, please try again.";
-        }
-        this.$root.$emit("NewNotification", {
-          msg,
-          type: "danger",
-        });
+        this.throwError(error);
       }
     },
     login() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="register-screen">
+  <div class="register-step-two-view">
     <DefaultBox @keydown.enter="completeProfile()">
       <h2 style="text-align: center">Complete Your Profile</h2>
       <form>
@@ -157,7 +157,7 @@ export default {
 </script>
 
 <style>
-.register-screen {
+.register-step-two-view {
   display: flex;
   flex-direction: column;
   align-items: center;

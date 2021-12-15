@@ -1,5 +1,5 @@
 <template>
-  <div class="login-screen">
+  <div class="login-view">
     <DefaultBox>
       <h1 style="text-align: center">Login</h1>
       <form>
@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style scoped>
-.login-screen {
+.login-view {
   display: flex;
   flex-direction: column;
   align-items: center;

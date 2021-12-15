@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LoginScreen from '../views/login/LoginScreen.vue'
-import Register from '../views/register/Register.vue'
-import RegisterStepTwo from '../views/register/RegisterStepTwo.vue'
+import LoginView from '../views/login/LoginView.vue'
+import RegisterStepOneView from '../views/register/RegisterStepOneView.vue'
+import RegisterStepTwoView from '../views/register/RegisterStepTwoView.vue'
 import ProfileView from '../views/profile/ProfileView.vue'
 
 Vue.use(VueRouter)
@@ -19,19 +19,19 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginScreen
+    component: LoginView
   },
   {
     path: '/register',
     name: 'register',
-    component: Register
+    component: RegisterStepOneView
   },
   {
     path: '/register2',
     name: 'register2',
-    component: RegisterStepTwo,
+    component: RegisterStepTwoView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {

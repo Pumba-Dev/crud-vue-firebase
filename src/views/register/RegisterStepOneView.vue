@@ -1,5 +1,5 @@
 <template>
-  <div class="register-screen">
+  <div class="register-step-one-view">
     <DefaultBox>
       <h1 style="text-align: center">Register</h1>
       <form>
@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style>
-.register-screen {
+.register-step-one-view {
   display: flex;
   flex-direction: column;
   align-items: center;

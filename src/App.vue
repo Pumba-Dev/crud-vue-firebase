@@ -17,18 +17,21 @@ export default {
   components: {
     NotificationLayout,
   },
-  beforeCreate() {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.uid = user.uid;
-      } else {
-        window.uid = null;
-      }
-      if (window.uid) {
-        this.$router.push({ name: "home" });
-      }
-    });
+  created() {
+    this.setCurrentUser();
+  },
+  methods: {
+    setCurrentUser() {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          window.uid = user.uid;
+          this.$router.push({ name: "home" });
+        } else {
+          window.uid = null;
+        }
+      });
+    },
   },
 };
 </script>

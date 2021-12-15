@@ -7,9 +7,9 @@
         <h6>{{ user.task }}</h6>
         <h6>{{ user.age }} years</h6>
       </ProfileName>
-      <b-button class="logout-btn" variant="primary" @click="logout()"
-        >Logout</b-button
-      >
+      <b-button class="logout-btn" variant="primary" @click="logout()">
+        Logout
+      </b-button>
     </UserContainer>
     <InfoContainer>
       <InfoHeader>
@@ -20,10 +20,7 @@
         <h3>Adress</h3>
         <h6><strong>Street: </strong> {{ user.adress.street }}</h6>
         <h6><strong>Cep: </strong> {{ user.adress.cep }}</h6>
-        <h6>
-          <strong>City: </strong> {{ user.adress.city }}
-          {{ user.adress.state }}
-        </h6>
+        <h6><strong>City: </strong> {{ user.adress.city }}</h6>
       </InfoAdress>
       <WhoIAm>
         <h3>Who I Am:</h3>
@@ -81,18 +78,8 @@ export default {
       const docSnap = await getDoc(userDocument);
 
       if (docSnap.exists()) {
-        this.user = {
-          name: docSnap.data().name,
-          age: docSnap.data().age,
-          email: currentUser.email,
-          adress: {
-            street: docSnap.data().adress.street,
-            cep: docSnap.data().adress.cep,
-            city: docSnap.data().adress.city,
-          },
-          task: docSnap.data().task,
-          whoIAm: docSnap.data().whoIAm,
-        };
+        this.user = { ...docSnap.data() };
+        this.user.email = currentUser.email;
       } else {
         this.$root.$emit("NewNotification", {
           msg: "Could not read user!",
@@ -104,7 +91,6 @@ export default {
       const auth = getAuth();
       signOut(auth)
         .then(() => {
-          console.log("Router Profile -> Login");
           this.$router.push("/login");
         })
         .catch(() => {

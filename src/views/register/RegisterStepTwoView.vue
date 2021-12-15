@@ -150,12 +150,13 @@ export default {
     },
     async processCEP() {
       try {
-        console.log("Buscando Cep.");
         const dataCEP = await consultCEP(this.inputUser.adress.cep);
-        this.inputUser.adress.street =
-          dataCEP.data.logradouro + " " + dataCEP.data.complemento;
-        this.inputUser.adress.city =
-          dataCEP.data.localidade + " - " + dataCEP.data.uf;
+        if (dataCEP.data.uf != undefined) {
+          this.inputUser.adress.street =
+            dataCEP.data.logradouro + " " + dataCEP.data.complemento;
+          this.inputUser.adress.city =
+            dataCEP.data.localidade + " - " + dataCEP.data.uf;
+        }
       } catch (error) {
         this.throwError(error);
       }

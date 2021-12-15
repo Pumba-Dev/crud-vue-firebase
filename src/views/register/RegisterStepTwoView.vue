@@ -8,6 +8,8 @@
             required
             type="text"
             placeholder="type your name"
+            maxlength="30"
+            size="30"
             v-model="inputUser.name"
           />
         </InputContainer>
@@ -20,6 +22,8 @@
               required
               type="text"
               placeholder="type your ocupation"
+              maxlength="20"
+              size="20"
               v-model="inputUser.task"
             />
           </InputContainer>
@@ -29,6 +33,9 @@
               required
               type="number"
               placeholder="type your age"
+              min="18"
+              max="110"
+              @blur="fixAge()"
               v-model.number="inputUser.age"
             />
           </InputContainer>
@@ -38,6 +45,8 @@
             required
             type="text"
             placeholder="Type yout street"
+            maxlength="37"
+            size="37"
             v-model="inputUser.adress.street"
           />
         </InputContainer>
@@ -57,6 +66,8 @@
               required
               type="text"
               placeholder="City - State"
+              maxlength="20"
+              size="20"
               v-model="inputUser.adress.city"
             />
           </InputContainer>
@@ -67,6 +78,8 @@
               required
               type="text"
               placeholder="Type about you..."
+              maxlength="180"
+              size="180"
               v-model="inputUser.whoIAm"
             />
           </InputContainer>
@@ -100,7 +113,7 @@ export default {
     return {
       inputUser: {
         name: "",
-        age: 0,
+        age: 18,
         adress: {
           street: "",
           cep: "",
@@ -173,6 +186,10 @@ export default {
       } catch (e) {
         console.error("Error adding document: ", e);
       }
+    },
+    fixAge() {
+      if (this.inputUser.age < 18) this.inputUser.age = 18;
+      if (this.inputUser.age > 110) this.inputUser.age = 110;
     },
   },
 };

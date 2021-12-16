@@ -160,16 +160,12 @@ export default {
       });
     },
     async processCEP() {
-      try {
-        const dataCEP = await consultCEP(this.inputUser.adress.cep);
-        if (dataCEP.data.uf != undefined) {
-          this.inputUser.adress.street =
-            dataCEP.data.logradouro + " " + dataCEP.data.complemento;
-          this.inputUser.adress.city =
-            dataCEP.data.localidade + " - " + dataCEP.data.uf;
-        }
-      } catch (error) {
-        this.throwError(error);
+      const dataCEP = await consultCEP(this.inputUser.adress.cep);
+      if (dataCEP.data.uf != undefined) {
+        this.inputUser.adress.street =
+          dataCEP.data.logradouro + " " + dataCEP.data.complemento;
+        this.inputUser.adress.city =
+          dataCEP.data.localidade + " - " + dataCEP.data.uf;
       }
     },
     async completeProfile() {

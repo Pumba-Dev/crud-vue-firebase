@@ -51,11 +51,11 @@ export default {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  min-width: min-content;
+  min-width: 100vw;
   height: 100%;
   width: 100%;
   background-color: #6dd5fa;
-  padding: 20px;
+  padding: 10px;
 }
 
 .med-logo {

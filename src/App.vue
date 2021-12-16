@@ -46,14 +46,24 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  min-width: min-content;
+  height: 100%;
+  width: 100%;
   background-color: #6dd5fa;
+  padding: 20px;
 }
 
 .med-logo {
   min-width: 250px;
   width: 20%;
   margin-bottom: 30px;
+}
+
+@media (max-width: 800px) {
+  #app {
+    min-height: 100%;
+    min-width: 100%;
+  }
 }
 </style>

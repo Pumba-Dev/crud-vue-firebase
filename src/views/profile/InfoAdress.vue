@@ -16,4 +16,8 @@ export default {};
 .info-adress > h3 {
   text-align: center;
 }
+
+.info-adress > h6 {
+  flex-wrap: wrap;
+}
 </style>

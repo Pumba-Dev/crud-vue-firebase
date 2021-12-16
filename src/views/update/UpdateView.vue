@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import { consultCEP } from "@/plugins/searchCEP.js";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import DefaultBox from "@/components/DefaultBox.vue";
@@ -120,7 +121,7 @@ export default {
       hasArchive: false,
     };
   },
-  mounted() {
+  created() {
     this.setCurrentUser();
     this.setUserProfile();
   },
@@ -131,6 +132,19 @@ export default {
     fixAge() {
       if (this.inputUser.age < 18) this.inputUser.age = 18;
       if (this.inputUser.age > 110) this.inputUser.age = 110;
+    },
+    async processCEP() {
+      try {
+        const dataCEP = await consultCEP(this.inputUser.adress.cep);
+        if (dataCEP.data.uf != undefined) {
+          this.inputUser.adress.street =
+            dataCEP.data.logradouro + " " + dataCEP.data.complemento;
+          this.inputUser.adress.city =
+            dataCEP.data.localidade + " - " + dataCEP.data.uf;
+        }
+      } catch (error) {
+        this.throwError(error);
+      }
     },
     sendNotify(msg, type) {
       this.$root.$emit("NewNotification", {

@@ -165,4 +165,23 @@ export default {
   border: 1px solid #fff8;
   border-radius: 2em;
 }
+
+@media (max-width: 800px) {
+  .profile-view {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+
+  .user-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .info-container {
+    justify-content: center;
+  }
+}
 </style>

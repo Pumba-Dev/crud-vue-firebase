@@ -15,7 +15,8 @@ export default {};
   border-radius: 2em;
   padding: 20px;
   width: 25vw;
-  min-width: 400px;
+  min-width: 350px;
+  box-sizing: border-box;
 }
 
 .default-box > h1 {

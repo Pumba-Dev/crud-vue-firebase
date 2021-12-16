@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { consultCEP } from "./searchCEP.js";
+import { consultCEP } from "@/plugins/searchCEP.js";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import DefaultBox from "@/components/DefaultBox.vue";
 import InputContainer from "@/components/InputContainer.vue";

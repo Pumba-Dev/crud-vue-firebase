@@ -15,6 +15,6 @@ export default {};
   text-align: justify;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-content: space-between;
 }
 </style>

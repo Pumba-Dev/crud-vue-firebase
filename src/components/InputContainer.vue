@@ -20,11 +20,10 @@ export default {
 .desc {
   font-size: 1.2rem;
 }
-.input-box {
+.input-container {
   display: flex;
   flex-direction: column;
-  margin: 10px 0px;
-  gap: 10px;
+  margin: 5px;
   font-weight: 400;
 }
 </style>

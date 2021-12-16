@@ -1,0 +1,21 @@
+[debug] [2021-12-16T00:01:41.138Z] ----------------------------------------------------------------------
+[debug] [2021-12-16T00:01:41.140Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\PumbaPC\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2021-12-16T00:01:41.140Z] CLI Version:   9.23.1
+[debug] [2021-12-16T00:01:41.140Z] Platform:      win32
+[debug] [2021-12-16T00:01:41.140Z] Node Version:  v14.18.0
+[debug] [2021-12-16T00:01:41.141Z] Time:          Wed Dec 15 2021 21:01:41 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2021-12-16T00:01:41.141Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-12-16T00:01:41.147Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-12-16T00:01:41.147Z] > authorizing via signed-in user (dudu32769144@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\PumbaPC\github\Vue\medclub
+

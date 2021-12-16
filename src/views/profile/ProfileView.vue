@@ -80,33 +80,6 @@ export default {
         type: type,
       });
     },
-    throwError(error) {
-      let msg = "";
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          msg = "This e-mail already in use.";
-          this.email = ""; // Limpa o input de E-mail
-          break;
-        case "auth/wrong-password":
-          msg = "Invalid Password.";
-          break;
-        case "auth/invalid-email":
-          msg = "Invalid E-mail.";
-          break;
-        case "auth/internal-error":
-          msg = "Type a password.";
-          break;
-        case "auth/weak-password":
-          msg = "Password should be at least 6 characters.";
-          break;
-        default:
-          msg = error.message;
-      }
-      this.$root.$emit("NewNotification", {
-        msg,
-        type: "danger",
-      });
-    },
     async setCurrentUser() {
       const db = getFirestore();
       const currentUser = getAuth().currentUser;
@@ -116,26 +89,16 @@ export default {
       if (docSnap.exists()) {
         this.user = { ...docSnap.data() };
         this.user.email = currentUser.email;
-      } else {
-        console.log("Tentando fazer login");
-        this.$root.$emit("NewNotification", {
-          msg: "Could not read user!",
-          type: "danger",
-        });
       }
     },
     deleteProfile() {
       const auth = getAuth();
       const user = auth.currentUser;
 
-      deleteUser(user)
-        .then(() => {
-          this.sendNotify("User Deleted", "normal");
-          this.$router.push({ name: "login" });
-        })
-        .catch((error) => {
-          this.throwError(error.code);
-        });
+      deleteUser(user).then(() => {
+        this.sendNotify("User Deleted", "normal");
+        this.$router.push({ name: "login" });
+      });
     },
     updateProfile() {
       this.$router.push({ name: "update" });

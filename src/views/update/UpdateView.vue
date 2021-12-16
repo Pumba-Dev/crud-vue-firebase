@@ -121,9 +121,8 @@ export default {
       hasArchive: false,
     };
   },
-  created() {
+  beforeMount() {
     this.setCurrentUser();
-    this.setUserProfile();
   },
   methods: {
     processFile() {
@@ -157,6 +156,7 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           Window.uid = user.uid;
+          this.setUserProfile();
         } else {
           this.sendNotify("Canot Read User.", "Danger");
         }
@@ -192,6 +192,7 @@ export default {
         task: newData.task,
         whoIAm: newData.whoIAm,
       }).then(() => {
+        this.sendNotify("Profile Updated.", "normal");
         this.$router.push({ name: "home" });
       });
     },

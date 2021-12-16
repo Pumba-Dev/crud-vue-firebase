@@ -19,16 +19,20 @@ export default {
   },
   created() {
     this.setCurrentUser();
-    console.log(window.uid);
   },
   methods: {
+    isRedirectRoute() {
+      return (
+        this.$router.currentRoute.name == "login" ||
+        this.$router.currentRoute.name == "register"
+      );
+    },
     setCurrentUser() {
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
           window.uid = user.uid;
-          if (this.$router.currentRoute.name != "register")
-            this.$router.push({ name: "home" });
+          if (this.isRedirectRoute()) this.$router.push({ name: "home" });
         } else {
           window.uid = null;
         }
@@ -58,12 +62,5 @@ export default {
   min-width: 250px;
   width: 20%;
   margin-bottom: 30px;
-}
-
-@media (max-width: 800px) {
-  #app {
-    min-height: 100%;
-    min-width: 100%;
-  }
 }
 </style>

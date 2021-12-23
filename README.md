@@ -5,8 +5,6 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/pumba-dev/crud-vue-firebase?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/pumba-dev/crud-vue-firebase?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/pumba-dev/crud-vue-firebase?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/pumba-dev/crud-vue-firebase?style=for-the-badge)
-![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/pumba-dev/crud-vue-firebase?style=for-the-badge)
 
 <p align="center" style="justify-content: 'space-around'"> 
   <img width="400rem" src="https://media-exp1.licdn.com/dms/image/C4D22AQH4KjFdPAOB-g/feedshare-shrink_1280/0/1639762282305?e=1643241600&v=beta&t=WZLE8Cf6lrWpBFahPRFUvShOfZfuWr6J-jpqnwFs9Us" alt="Tela Inicial da Aplicação">
@@ -32,7 +30,7 @@ let firebaseConfig = {
   measurementId: "INSIRA AQUI AS CONFIG DO SEU FIREBASE"
 };
 ```
-## 🚀 Iniciando Servidor Web
+## ☕ Iniciando Servidor Web
   
 Windows:
 ```

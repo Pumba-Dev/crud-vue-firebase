@@ -11,7 +11,7 @@
   <img height="300rem" src="https://media-exp1.licdn.com/dms/image/C4D22AQE1pzHTdtGfoQ/feedshare-shrink_2048_1536/0/1639762282299?e=1643241600&v=beta&t=3EDCXW0tLPd7aLY8lrzwALfdfNKfRPCO2MwnM5pSShI" alt="Tela de Profile da Aplicação">
 </p>
 
-> Interface front-end desenvolvida com o framework Vue e utilizando Firebase para API back-end. Utilizado também o framework bootstrap e conexão com API de CEP.
+> Interface front-end desenvolvida com o framework Vue e utilizando Firebase para API back-end. São 4 telas ao todo, sendo 2 retratadas logo a cima. Também foi utilizado o framework bootstrap e conexão com uma API de CEP.
 
 ## 🚀 Instalando <Firebase>
 
